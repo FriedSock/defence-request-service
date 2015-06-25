@@ -11,7 +11,7 @@ class DefenceRequestForm
                           :detainee_name_not_given, :detainee_address_not_given, :date_of_birth_not_given
 
   DELEGATED_ATTRIBUTES.each do |attr_name|
-    def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
+    def_delegator :@defence_request, attr_name, attr_name
   end
 
   def_delegators :@defence_request, :persisted?, :id, :human_attribute
