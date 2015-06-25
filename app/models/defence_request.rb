@@ -68,6 +68,8 @@ class DefenceRequest < ActiveRecord::Base
 
   audited
 
+  before_validation :clear_not_givens
+
   SCHEMES = [ "No Scheme",
               "Brighton Scheme 1",
               "Brighton Scheme 2",
@@ -106,5 +108,13 @@ class DefenceRequest < ActiveRecord::Base
 
   def closed?
     CLOSED_STATES.include? state.to_sym
+  end
+
+  private
+
+  def clear_not_givens
+    self.detainee_name = nil if detainee_name_not_given?
+    self.detainee_address = nil if detainee_address_not_given?
+    self.date_of_birth = nil if date_of_birth_not_given?
   end
 end

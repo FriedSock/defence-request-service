@@ -161,4 +161,17 @@ RSpec.describe DefenceRequest, type: :model do
       end
     end
   end
+
+  describe "when not_given is selected for a field, its content is emptied", focus: true do
+    let(:defence_request) { create :defence_request, :with_detainee_address }
+
+    %w(detainee_name detainee_address date_of_birth).each do |attribute|
+      it "for #{attribute}" do
+        not_given_attribute = "#{attribute}_not_given".to_sym
+        defence_request.update(not_given_attribute => true)
+
+        expect(defence_request.send(attribute)).to be_blank
+      end
+    end
+  end
 end
